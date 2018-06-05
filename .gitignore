@@ -295,3 +295,4 @@ __pycache__/
 *.ncrunchproject
 *.ncrunchsolution
 _NCrunch_*/
+paket.lock
