@@ -3,7 +3,7 @@ An example of how to use Paket to use shared build files repo
 
 ## Steps
 
-1. Installing paket
+### Installing paket
 As per Paket installation instructions: https://fsprojects.github.io/Paket/installation.html#Installation-per-repository
 ``` bash
 mkdir .paket
@@ -12,7 +12,7 @@ mkdir .paket
 
 ```
 
-2. Define paket dependencies
+### Define paket dependencies
 Paket relies on the file to exist in order to restore dependencies. The file has to be at a solution root (OPTIONALLY the whole Paket infrastructure can be placed into the `build` folder and be executed there)
 
 ```
@@ -29,7 +29,7 @@ nuget FAKE ~> 4.64
 github iblazhko/build-scripts-poc build.fsx
 ```
 
-3. Create build script placeholder
+### Create build script placeholder
 ``` bash
 mkdir build
 touch build.ps1
@@ -97,12 +97,29 @@ if ($LASTEXITCODE -ne 0)
 
 Note that `$buildScript` is now pointing to the default buildscript file provided from the reference repository
 
-4. Run the build script
+### Run the build script
 `.\build\build.ps1 -target UnitTests`
 
 This should build the solution and run `dotnet test` for the unit tests projects:
 ![build results](static/images/buildResults.png "Build results output")
 
-
-
 5. PROFIT!
+
+## Custom build file
+Now we may want to define our custom targets to do steps specific to our project that are different from what is proposed by default build files we are referencing
+
+Here's how to achieve this:
+
+### Create custom `build.fsx` file
+In this example please follow to the `build-custom` directory for the examples
+
+Note that new `build.ps1` file is now referring to the custom FAKE file:
+`$buildScript=[System.IO.Path]::Combine($repositoryDir, "build-custom", "build-custom.fsx")`
+
+Note that the new `build-custom.fsx` file defines a new target dependency `CustomTarget` for a `build` target
+
+### Run the customized build
+Run the build as follows:
+`.\build-custom\build.ps1 -target UnitTests`
+
+KNOWN PROBLEMS: CURRENTLY TARGETS WILL RUN TWICE (NEED A WOrkAROUND)
