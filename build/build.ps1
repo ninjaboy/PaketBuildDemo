@@ -22,26 +22,34 @@ Param(
 $buildDir=$PSScriptRoot
 $buildLog=[System.IO.Path]::Combine($buildDir, "reports", "build.log")
 
-$solutionDir=(Get-Item $buildDir).Parent.FullName
+$repositoryDir=(Get-Item $buildDir).Parent.FullName
+$solutionName="Paket.Build.Demo"
 
-$paketDir=[System.IO.Path]::Combine($solutionDir, ".paket")
+$paketDir=[System.IO.Path]::Combine($repositoryDir, ".paket")
 $paketBootstrapper=[System.IO.Path]::Combine($paketDir, "paket.bootstrapper.exe")
 $paket=[System.IO.Path]::Combine($paketDir, "paket.exe")
 
-$packagesDir =[System.IO.Path]::Combine($solutionDir, "packages")
+$packagesDir =[System.IO.Path]::Combine($repositoryDir, "packages")
 $fake=[System.IO.Path]::Combine($packagesDir, "FAKE", "tools", "FAKE.exe")
 
 # Default script is used for now
-$buildScript=[System.IO.Path]::Combine($solutionDir, "paket-files", "iblazhko", "build-scripts-poc", "build.fsx" )
+$buildScript=[System.IO.Path]::Combine($repositoryDir, "paket-files", "ninjaboy", "build-scripts-poc", "build.fsx" )
 
-Write-Host -ForegroundColor Green "*** Building $Configuration in $solutionDir ***"
+Write-Host -ForegroundColor Green "*** Building $Configuration in $repositoryDir for solution $solutionName***"
 
 Write-Host -ForegroundColor Green "*** Initializing paket ***"
 & "$paketBootstrapper"
 & "$paket" install
 
-Write-Host -ForegroundColor Green "***    FAKE it ***"
-& "$fake" "$buildScript" "$Target" --logfile "$buildLog" Configuration="$Configuration" BuildVersion="$BuildVersion" Runtime="$Runtime" SutStartMode="$SutStartMode"
+Write-Host -ForegroundColor Green "*** FAKE it ***"
+& "$fake" "$buildScript" "$Target" `
+            RepositoryDir="$repositoryDir" `
+            SolutionName="$solutionName" `
+            Configuration="$Configuration" `
+            BuildVersion="$BuildVersion" `
+            Runtime="$Runtime" `
+            SutStartMode="$SutStartMode" `
+            --logfile "$buildLog"
 
 if ($LASTEXITCODE -ne 0)
 {

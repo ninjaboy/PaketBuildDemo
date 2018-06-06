@@ -69,7 +69,7 @@ $paket=[System.IO.Path]::Combine($paketDir, "paket.exe")
 $packagesDir =[System.IO.Path]::Combine($solutionDir, "packages")
 $fake=[System.IO.Path]::Combine($packagesDir, "FAKE", "tools", "FAKE.exe")
 
-$buildScript=[System.IO.Path]::Combine($solutionDir, "paket-files", "iblazhko", "build-scripts-poc", "build.fsx" )
+$buildScript=[System.IO.Path]::Combine($solutionDir, "paket-files", "ninjaboy", "build-scripts-poc", "build.fsx" )
 
 Write-Host -ForegroundColor Green "*** Building $Configuration in $solutionDir ***"
 

@@ -2,4 +2,4 @@ source https://api.nuget.org/v3/index.json
 
 nuget FAKE ~> 4.64
 
-github iblazhko/build-scripts-poc build.fsx
+github ninjaboy/build-scripts-poc build.fsx
