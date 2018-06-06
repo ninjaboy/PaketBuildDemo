@@ -30,7 +30,7 @@ github iblazhko/build-scripts-poc build.fsx
 ```
 
 3. Create build script placeholder
-```
+``` bash
 mkdir build
 touch build.ps1
 ```
@@ -77,14 +77,16 @@ Write-Host -ForegroundColor Green "*** Initializing paket ***"
 & "$paketBootstrapper"
 & "$paket" install
 
-# Write-Host -ForegroundColor Green "***    FAKE it ***"
-# & "$fake" "$buildScript" "$Target" --logfile "$buildLog" Configuration="$Configuration" BuildVersion="$BuildVersion" Runtime="$Runtime" SutStartMode="$SutStartMode"
+Write-Host -ForegroundColor Green "***  Run FAKE targets ***"
+& "$fake" "$buildScript" "$Target" --logfile "$buildLog" Configuration="$Configuration" BuildVersion="$BuildVersion" Runtime="$Runtime" SutStartMode="$SutStartMode"
 
 if ($LASTEXITCODE -ne 0)
 {
     Exit $LASTEXITCODE
 }
 ```
+
+Note that `$buildScript` is now pointing to the default buildscript file provided from the reference repository
 
 4. ...
 
