@@ -122,4 +122,12 @@ Note that the new `build-custom.fsx` file defines a new target dependency `Custo
 Run the build as follows:
 `.\build-custom\build.ps1 -target UnitTests`
 
-KNOWN PROBLEMS: CURRENTLY TARGETS WILL RUN TWICE (NEED A WOrkAROUND)
+
+# KNOWN PROBLEMS: 
+
+## TODO: CURRENTLY TARGETS WILL RUN TWICE (NEED A WOrkAROUND)
+
+## paket.lock
+In case if paket file was already generated, then git reference is changed (e.g. branch in the reference is changed or even pointing to the non-existent branch) - Paket seems to ignore this and reuse locally cached files.
+In order to resolve this issue `paket.log` file should be removed 
+

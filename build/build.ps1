@@ -33,7 +33,7 @@ $packagesDir =[System.IO.Path]::Combine($repositoryDir, "packages")
 $fake=[System.IO.Path]::Combine($packagesDir, "FAKE", "tools", "FAKE.exe")
 
 # Default script is used for now
-$buildScript=[System.IO.Path]::Combine($repositoryDir, "paket-files", "ninjaboy", "build-scripts-poc", "build.fsx" )
+$buildScript=[System.IO.Path]::Combine($repositoryDir, "paket-files", "ninjaboy", "build-scripts-poc", "build-runner.fsx" )
 
 Write-Host -ForegroundColor Green "*** Building $Configuration in $repositoryDir for solution $solutionName***"
 
