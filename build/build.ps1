@@ -39,7 +39,21 @@ Write-Host -ForegroundColor Green "*** Building $Configuration in $repositoryDir
 
 Write-Host -ForegroundColor Green "*** Initializing paket ***"
 & "$paketBootstrapper"
+
+if ($LASTEXITCODE -ne 0)
+{
+    trace "Could not resolve initialize Paket"
+    Exit $LASTEXITCODE
+}
+
+Write-Host -ForegroundColor Green "*** Getting build tools ***"
 & "$paket" install
+
+if ($LASTEXITCODE -ne 0)
+{
+    trace "Could not resolve some of the Paket dependencies"
+    Exit $LASTEXITCODE
+}
 
 Write-Host -ForegroundColor Green "*** FAKE it ***"
 & "$fake" "$buildScript" "$Target" `
