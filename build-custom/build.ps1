@@ -25,33 +25,41 @@ $buildLog=[System.IO.Path]::Combine($buildDir, "reports", "build.log")
 $repositoryDir=(Get-Item $buildDir).Parent.FullName
 $solutionName="Paket.Build.Demo"
 
-$paketDir=[System.IO.Path]::Combine($repositoryDir, ".paket")
+$paketDir=[System.IO.Path]::Combine($buildDir, ".paket")
 $paketBootstrapper=[System.IO.Path]::Combine($paketDir, "paket.bootstrapper.exe")
 $paket=[System.IO.Path]::Combine($paketDir, "paket.exe")
 
-$packagesDir =[System.IO.Path]::Combine($repositoryDir, "packages")
+$packagesDir =[System.IO.Path]::Combine($buildDir, "packages")
 $fake=[System.IO.Path]::Combine($packagesDir, "FAKE", "tools", "FAKE.exe")
 
 # Custom build script is used!
-$buildScript=[System.IO.Path]::Combine($repositoryDir, "build-custom", "build-custom.fsx" )
+$buildScript=[System.IO.Path]::Combine($buildDir, "build-custom.fsx" )
 
-Write-Host -ForegroundColor Green "*** Building $Configuration in $repositoryDir for solution $solutionName***"
+Push-Location -Path $buildDir
+try {
+    Write-Host -ForegroundColor Green "*** Building $Configuration in $repositoryDir for solution $solutionName***"
 
-Write-Host -ForegroundColor Green "*** Initializing paket ***"
-& "$paketBootstrapper"
-& "$paket" install
-
-Write-Host -ForegroundColor Green "*** FAKE it ***"
-& "$fake" "$buildScript" "$Target" `
-            RepositoryDir="$repositoryDir" `
-            SolutionName="$solutionName" `
-            Configuration="$Configuration" `
-            BuildVersion="$BuildVersion" `
-            Runtime="$Runtime" `
-            SutStartMode="$SutStartMode" `
-            --logfile "$buildLog"
-
-if ($LASTEXITCODE -ne 0)
-{
-    Exit $LASTEXITCODE
+    Write-Host -ForegroundColor Green "*** Initializing paket ***"
+    & "$paketBootstrapper"
+    & "$paket" install
+    
+    Write-Host -ForegroundColor Green "*** FAKE it ***"
+    & "$fake" "$buildScript" "$Target" `
+                RepositoryDir="$repositoryDir" `
+                SolutionName="$solutionName" `
+                Configuration="$Configuration" `
+                BuildVersion="$BuildVersion" `
+                Runtime="$Runtime" `
+                SutStartMode="$SutStartMode" `
+                --logfile "$buildLog"
+    
+    
+    
+    if ($LASTEXITCODE -ne 0)
+    {
+        Exit $LASTEXITCODE
+    }    
+}
+finally {
+    Pop-Location
 }

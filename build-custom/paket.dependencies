@@ -1,0 +1,5 @@
+source https://api.nuget.org/v3/index.json
+
+nuget FAKE ~> 4.64
+
+github ninjaboy/build-scripts-poc:master build.fsx

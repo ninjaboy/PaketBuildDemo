@@ -1,4 +1,4 @@
-#load @"../paket-files/ninjaboy/build-scripts-poc/build.fsx"
+#load @"./paket-files/ninjaboy/build-scripts-poc/build.fsx"
 
 open Fake
 open System
