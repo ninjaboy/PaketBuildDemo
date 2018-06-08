@@ -33,7 +33,7 @@ $packagesDir =[System.IO.Path]::Combine($buildDir, "packages")
 $fake=[System.IO.Path]::Combine($packagesDir, "FAKE", "tools", "FAKE.exe")
 
 # Default script is used for now
-$buildScript=[System.IO.Path]::Combine($buildDir, "paket-files", "ninjaboy", "build-scripts-poc", "build-runner.fsx" )
+$buildScript=[System.IO.Path]::Combine($buildDir, "paket-files", "ninjaboy", "build-scripts-poc-private", "build-runner.fsx" )
 
 try {
     Push-Location -Path $buildDir

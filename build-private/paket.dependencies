@@ -1,0 +1,6 @@
+source https://api.nuget.org/v3/index.json
+
+nuget FAKE ~> 4.64
+
+github ninjaboy/build-scripts-poc-private:master build.fsx github-token
+github ninjaboy/build-scripts-poc-private:master build-runner.fsx github-token

@@ -41,7 +41,7 @@ try {
 
     Write-Host -ForegroundColor Green "*** Initializing paket ***"
     & "$paketBootstrapper"
-    & "$paket" install
+    & "$paket" update
     
     Write-Host -ForegroundColor Green "*** FAKE it ***"
     & "$fake" "$buildScript" "$Target" `
