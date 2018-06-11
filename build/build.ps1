@@ -50,15 +50,13 @@ try {
         Invoke-WebRequest -Uri $paketUri -OutFile $paket
         if ($LASTEXITCODE -ne 0)
         {
-            trace "Could not resolve some of the Paket dependencies"
+            trace "Downloading Paket failed"
             Exit $LASTEXITCODE
         }
     }
 
-
     Write-Host -ForegroundColor Green "*** Getting build tools ***"
     & "$paket" update
-
     if ($LASTEXITCODE -ne 0)
     {
         trace "Could not resolve some of the Paket dependencies"
