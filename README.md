@@ -1,4 +1,17 @@
 # PaketBuildDemo
+- [PaketBuildDemo](#paketbuilddemo)
+    - [Steps](#steps)
+        - [Installing paket](#installing-paket)
+        - [Define paket dependencies](#define-paket-dependencies)
+        - [Create build script placeholder](#create-build-script-placeholder)
+        - [Run the build script](#run-the-build-script)
+    - [Custom build file](#custom-build-file)
+        - [Create custom `build.fsx` file](#create-custom-buildfsx-file)
+        - [Run the customized build](#run-the-customized-build)
+    - [Git private repository](#git-private-repository)
+        - [Getting Github personal access token](#getting-github-personal-access-token)
+- [KNOWN PROBLEMS:](#known-problems)
+
 An example of how to use Paket to use shared build files repo
 
 ## Steps
