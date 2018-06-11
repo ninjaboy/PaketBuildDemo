@@ -17,7 +17,7 @@ An example of how to use Paket to use shared build files repo
 ## Steps
 
 ### Installing paket
-//This step was omitted by adding an automatic download of paket from builds cript tempalte
+//This step was omitted by adding an automatic download of paket from builds cript template
 NOTE: we are going to be using paket in a _magic_ mode. More details: https://fsprojects.github.io/Paket/bootstrapper.html
 
 ### Define paket dependencies
@@ -40,7 +40,7 @@ github ninjaboy/build-scripts-poc:master build-runner.fsx
 
 ```
 
-We are goin to use FAKE tool to run our build files and we are referencing 2 fsharp buildfiles that we will be using as our default builds cripts
+We are goin to use FAKE tool to run our build files and we are referencing 2 fsharp buildfiles that we will be using as our default build scripts
 
 ### Create build script placeholder
 
