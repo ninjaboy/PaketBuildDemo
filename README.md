@@ -28,7 +28,7 @@ mkdir build
 touch build/paket.dependencies
 ```
 
-Reference fake and a desired custom build scripts in the newly created file (_NOTE: for the purpose of this demo a new repository with build scripts was created at: `https://github.com/ninjaboy/build-scripts-poc`_):
+Reference fake and a desired custom build scripts in the newly created file (_NOTE: for the purpose of this demo a new repository with build scripts was created at: https://github.com/ninjaboy/build-scripts-poc_):
 
 ``` paket
 source https://api.nuget.org/v3/index.json
@@ -52,7 +52,7 @@ cd build
 touch build.ps1
 ```
 
-Copy the reference build file from `build-scripts-poc` repository named `build.ps1` into your `build` directory.
+Copy [the reference build file from `build-scripts-poc` repository named `build.ps1`](https://github.com/ninjaboy/build-scripts-poc/blob/master/build.ps1) into your `build` directory.
 
 ### Run the build script
 In it's simplest for the build script can be run as follows `.\build\build.ps1` which will run `FullBuild` target or specify the target to run `.\build\build.ps1 -target UnitTests`
