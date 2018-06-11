@@ -10,7 +10,10 @@ As per Paket installation instructions: https://fsprojects.github.io/Paket/insta
 mkdir .paket
 # copy packet bootstrapper from the internetz to the .paket directory
 #https://github.com/fsprojects/Paket/releases/download/5.170.2/paket.bootstrapper.exe
+mv paket.bootstrapper.exe paket.exe
 ```
+
+NOTE: we are going to be using paket in a _magic_ mode. More details: https://fsprojects.github.io/Paket/bootstrapper.html
 
 ### Define paket dependencies
 Paket relies on the file to exist in order to restore dependencies. The file has to be at a solution root (OPTIONALLY the whole Paket infrastructure can be placed into the `build` folder and be executed there as it was made in this demo)
@@ -144,6 +147,10 @@ Run the build as follows:
 
 You will see that the newly defined target was taken into account when building dependencies list:
 ![custom target](static/images/custom-build.png "Custom target is now taken into dependencies list")
+
+## Magic mode
+The simplest way to use the common build pipeline is the `magic mode`. (As a reference to paket `magic` mode)
+With this approach only the minimum script is required to be created. Please follow to the `build-magic` folder for an example.
 
 ## Git private repository
 It is highly likely that the shared build scripts may need to be kept in the private repository

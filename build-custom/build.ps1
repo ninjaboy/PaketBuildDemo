@@ -26,7 +26,6 @@ $repositoryDir=(Get-Item $buildDir).Parent.FullName
 $solutionName="Paket.Build.Demo"
 
 $paketDir=[System.IO.Path]::Combine($buildDir, ".paket")
-$paketBootstrapper=[System.IO.Path]::Combine($paketDir, "paket.bootstrapper.exe")
 $paket=[System.IO.Path]::Combine($paketDir, "paket.exe")
 
 $packagesDir =[System.IO.Path]::Combine($buildDir, "packages")
@@ -40,7 +39,6 @@ try {
     Write-Host -ForegroundColor Green "*** Building $Configuration in $repositoryDir for solution $solutionName***"
 
     Write-Host -ForegroundColor Green "*** Initializing paket ***"
-    & "$paketBootstrapper"
     & "$paket" update
     
     Write-Host -ForegroundColor Green "*** FAKE it ***"
