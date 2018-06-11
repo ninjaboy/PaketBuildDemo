@@ -4,15 +4,7 @@ An example of how to use Paket to use shared build files repo
 ## Steps
 
 ### Installing paket
-As per Paket installation instructions: https://fsprojects.github.io/Paket/installation.html#Installation-per-repository
-
-``` bash
-mkdir .paket
-# copy packet bootstrapper from the internetz to the .paket directory
-#https://github.com/fsprojects/Paket/releases/download/5.170.2/paket.bootstrapper.exe
-mv paket.bootstrapper.exe paket.exe
-```
-
+//This step was omitted by adding an automatic download of paket from builds cript tempalte
 NOTE: we are going to be using paket in a _magic_ mode. More details: https://fsprojects.github.io/Paket/bootstrapper.html
 
 ### Define paket dependencies
@@ -47,80 +39,7 @@ cd build
 touch build.ps1
 ```
 
-Put the following content into the newly created file
-
-``` powershell
-Param(
-    [ValidateNotNullOrEmpty()]
-    [string]$Target="Default",
-
-    [ValidateNotNullOrEmpty()]
-    [ValidateSet("Debug", "Release")]
-    [string]$Configuration="Release",
-
-    [ValidateNotNullOrEmpty()]
-    [string]$BuildVersion="0.0.0-unversioned",
-
-    [ValidateNotNullOrEmpty()]
-    [ValidateSet("any", "win-x64", "win", "linux-x64")]
-    [string]$Runtime="linux-x64", 
-
-    [ValidateNotNullOrEmpty()]
-    [ValidateSet("AppDomain", "Docker")]
-    [string]$SutStartMode="AppDomain"
-)
-
-$buildDir=$PSScriptRoot
-$buildLog=[System.IO.Path]::Combine($buildDir, "reports", "build.log")
-
-$repositoryDir=(Get-Item $buildDir).Parent.FullName
-$solutionName="Paket.Build.Demo"
-
-$paketDir=[System.IO.Path]::Combine($buildDir, ".paket")
-$paketBootstrapper=[System.IO.Path]::Combine($paketDir, "paket.bootstrapper.exe")
-$paket=[System.IO.Path]::Combine($paketDir, "paket.exe")
-
-$packagesDir =[System.IO.Path]::Combine($buildDir, "packages")
-$fake=[System.IO.Path]::Combine($packagesDir, "FAKE", "tools", "FAKE.exe")
-
-# Default script is used for now
-$buildScript=[System.IO.Path]::Combine($buildDir, "paket-files", "ninjaboy", "build-scripts-poc", "build-runner.fsx" )
-
-try {
-    Push-Location -Path $buildDir
-    Write-Host -ForegroundColor Green "*** Building $Configuration in $repositoryDir for solution $solutionName***"
-    Write-Host -ForegroundColor Green "*** Initializing paket ***"
-    & "$paketBootstrapper"
-    if ($LASTEXITCODE -ne 0)
-    {
-        trace "Could not resolve initialize Paket"
-        Exit $LASTEXITCODE
-    }
-    Write-Host -ForegroundColor Green "*** Getting build tools ***"
-    & "$paket" update
-    if ($LASTEXITCODE -ne 0)
-    {
-        trace "Could not resolve some of the Paket dependencies"
-        Exit $LASTEXITCODE
-    }
-    Write-Host -ForegroundColor Green "*** FAKE it ***"
-    & "$fake" "$buildScript" "$Target" `
-                RepositoryDir="$repositoryDir" `
-                SolutionName="$solutionName" `
-                Configuration="$Configuration" `
-                BuildVersion="$BuildVersion" `
-                Runtime="$Runtime" `
-                SutStartMode="$SutStartMode" `
-                --logfile "$buildLog"
-    if ($LASTEXITCODE -ne 0)
-    {
-        Exit $LASTEXITCODE
-    }    
-}
-finally {
-    Pop-Location
-}
-```
+Copy the reference build file from `build-scripts-poc` repository named `build.ps1` into your `build` directory.
 
 ### Run the build script
 In it's simplest for the build script can be run as follows `.\build\build.ps1` which will run `FullBuild` target or specify the target to run `.\build\build.ps1 -target UnitTests`
@@ -147,10 +66,6 @@ Run the build as follows:
 
 You will see that the newly defined target was taken into account when building dependencies list:
 ![custom target](static/images/custom-build.png "Custom target is now taken into dependencies list")
-
-## Magic mode
-The simplest way to use the common build pipeline is the `magic mode`. (As a reference to paket `magic` mode)
-With this approach only the minimum script is required to be created. Please follow to the `build-magic` folder for an example.
 
 ## Git private repository
 It is highly likely that the shared build scripts may need to be kept in the private repository
