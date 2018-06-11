@@ -25,6 +25,7 @@ $buildLog=[System.IO.Path]::Combine($buildDir, "reports", "build.log")
 $repositoryDir=(Get-Item $buildDir).Parent.FullName
 $solutionName="Paket.Build.Demo"
 
+$paketUri = "https://github.com/fsprojects/Paket/releases/download/5.172.2/paket.bootstrapper.exe"
 $paketDir=[System.IO.Path]::Combine($buildDir, ".paket")
 $paket=[System.IO.Path]::Combine($paketDir, "paket.exe")
 
@@ -37,6 +38,20 @@ $buildScript=[System.IO.Path]::Combine($buildDir, "build-custom.fsx" )
 Push-Location -Path $buildDir
 try {
     Write-Host -ForegroundColor Green "*** Building $Configuration in $repositoryDir for solution $solutionName***"
+
+    Write-Host -ForegroundColor Green "*** Getting paket ***"
+    if(![System.IO.File]::Exists($paket)){
+        if(!(test-path $paketDir)) {
+              New-Item -ItemType Directory -Force -Path $paketDir
+        }
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+        Invoke-WebRequest -Uri $paketUri -OutFile $paket
+        if ($LASTEXITCODE -ne 0)
+        {
+            trace "Could not resolve some of the Paket dependencies"
+            Exit $LASTEXITCODE
+        }
+    }
 
     Write-Host -ForegroundColor Green "*** Initializing paket ***"
     & "$paket" update
